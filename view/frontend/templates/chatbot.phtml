@@ -4,18 +4,16 @@
 if($block->isEnabled()):
 ?>
 
-<div id="padaviva-chat" data-mage-init='{"padaviva_chatbot": {"message": "HELLO WORLD!"}}'>
-    <button class="open-button" onclick="openForm()">Chat</button>
+<div id="padaviva-chat" data-mage-init='{"padaviva_chatbot": {"chatUrl": "HELLO WORLD!"}}'>
+    <button class="open-button" data-role="open-chat">Chat</button>
 
-    <div class="chat-popup" id="myForm">
-        <form action="/action_page.php" class="form-container">
-            <h1>Chat</h1>
-
+    <div class="chat-popup" id="chat-popup">
+        <form action="" class="chat-form-container">
             <label for="msg"><b>Message</b></label>
-            <textarea placeholder="Type message.." name="msg" required></textarea>
+            <input type="text" placeholder="Type message.." name="msg" required/>
 
-            <button type="submit" class="btn">Send</button>
-            <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            <button type="submit" class="btn" id="send-message">Send</button>
+            <button type="button" class="btn cancel" data-role="close-chat">Close</button>
         </form>
     </div>
 </div>
