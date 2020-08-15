@@ -4,6 +4,7 @@
         <padavivachatbot>
             <general>
                 <enable>1</enable>
+                <clean_logs_after_hours>48</clean_logs_after_hours>
             </general>
         </padavivachatbot>
     </default>
