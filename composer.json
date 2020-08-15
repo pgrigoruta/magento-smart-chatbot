@@ -1,0 +1,22 @@
+{
+    "name": "pgrigoruta/magento-smart-chatbot",
+    "description": "",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Paul Grigoruta",
+            "email": "paul.grigoruta@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Padaviva\\Chatbot\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
