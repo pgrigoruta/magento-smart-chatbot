@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class='Padaviva\Chatbot\Block\Chatbot' name="padaviva_chatbot" as="padaviva_chatbot" after="footer_links" template="Padaviva_Chatbot::chatbot.phtml"/>
+        </referenceContainer>
+    </body>
+</page>
