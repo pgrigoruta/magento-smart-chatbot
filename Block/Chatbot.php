@@ -2,6 +2,13 @@
 
 namespace Padaviva\Chatbot\Block;
 
-class Chatbot extends \Magento\Framework\View\Element\Template {
+use Magento\Framework\View\Element\Template;
+
+class Chatbot extends Template {
     
+    const XML_PATH_ENABLED = 'padavivachatbot/general/enable';
+    
+    public function isEnabled() {
+        return $this->_scopeConfig->getValue(self::XML_PATH_ENABLED);    
+    }
 }
