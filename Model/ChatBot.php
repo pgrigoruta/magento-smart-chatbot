@@ -19,9 +19,12 @@ class ChatBot {
     
     protected $customerSession;
     
+    protected $chatLogCollectionFactory;
+    
     
     public function __construct( \Magento\Framework\Module\Dir\Reader $moduleReader,
                                  ChatlogFactory $chatlogFactory,
+                                 \Padaviva\Chatbot\Model\ResourceModel\Chatlog\CollectionFactory $chatLogCollectionFactory,
                                  \Magento\Customer\Model\Session $customerSession,
                                  \Magento\Framework\Session\SessionManager $sessionManager)
     {
@@ -29,18 +32,10 @@ class ChatBot {
         $this->chatlogFactory = $chatlogFactory;
         $this->sessionManager = $sessionManager;
         $this->customerSession = $customerSession;
+        $this->chatLogCollectionFactory = $chatLogCollectionFactory;
     }
 
-    protected function initialize() {
-        if(is_null($this->aimlClient)) {
-            $aimlFilePath = $this->moduleReader->getModuleDir(\Magento\Framework\Module\Dir::MODULE_ETC_DIR,'Padaviva_Chatbot');
-            $aimlFilePath.='/aiml/basic.xml';
-            
-            $this->aimlClient = new AIML();
-            $this->aimlClient->addDict($aimlFilePath);
-            
-        }
-    }
+    
 
     public function getResponse($message) {
         $this->initialize();
@@ -48,6 +43,28 @@ class ChatBot {
         $message = strtolower($message);
         
         return $this->aimlClient->getAnswer($message);
+    }
+    
+    public function getHistory() {
+        $sessionId = $this->sessionManager->getSessionId();
+        
+        $chatLogCollection = $this->chatLogCollectionFactory->create();
+        $chatLogCollection->addFieldToFilter('session_id',$sessionId);
+        $chatLogCollection->getSelect()->order("created_at ASC");
+        
+        return $chatLogCollection;
+    }
+
+    protected function initialize() 
+    {
+        if(is_null($this->aimlClient)) {
+            $aimlFilePath = $this->moduleReader->getModuleDir(\Magento\Framework\Module\Dir::MODULE_ETC_DIR,'Padaviva_Chatbot');
+            $aimlFilePath.='/aiml/basic.xml';
+
+            $this->aimlClient = new AIML();
+            $this->aimlClient->addDict($aimlFilePath);
+
+        }
     }
     
     public function logQuestion($message) {
