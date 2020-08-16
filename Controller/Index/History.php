@@ -24,18 +24,10 @@ class History extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $resultJson = $this->resultJsonFactory->create();
-
-        $log = [];
-        $logCollection = $this->chatBot->getHistory();
-        foreach($logCollection as $logItem) {
-            $log[]=[
-                'type' => $logItem->getType(),
-                'message' => $logItem->getMessage()
-            ];
-        }
-
-        $response = [$log];
-        $resultJson->setData($response);
+        
+        $messages = $this->chatBot->getHistory();
+        
+        $resultJson->setData($messages);
 
         return $resultJson;
     }

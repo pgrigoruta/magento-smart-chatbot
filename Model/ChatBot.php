@@ -15,7 +15,6 @@ class ChatBot {
     
     protected $sessionManager;
     
-    protected $chatlogFactory;
     
     protected $customerSession;
     
@@ -24,7 +23,6 @@ class ChatBot {
     
     public function __construct( \Magento\Framework\Module\Dir\Reader $moduleReader,
                                  ChatlogFactory $chatlogFactory,
-                                 \Padaviva\Chatbot\Model\ResourceModel\Chatlog\CollectionFactory $chatLogCollectionFactory,
                                  \Magento\Customer\Model\Session $customerSession,
                                  \Magento\Framework\Session\SessionManager $sessionManager)
     {
@@ -32,7 +30,6 @@ class ChatBot {
         $this->chatlogFactory = $chatlogFactory;
         $this->sessionManager = $sessionManager;
         $this->customerSession = $customerSession;
-        $this->chatLogCollectionFactory = $chatLogCollectionFactory;
     }
 
     
@@ -46,13 +43,9 @@ class ChatBot {
     }
     
     public function getHistory() {
-        $sessionId = $this->sessionManager->getSessionId();
-        
-        $chatLogCollection = $this->chatLogCollectionFactory->create();
-        $chatLogCollection->addFieldToFilter('session_id',$sessionId);
-        $chatLogCollection->getSelect()->order("created_at ASC");
-        
-        return $chatLogCollection;
+        $messages = $this->sessionManager->getChatMessages();
+        if(!$messages) $messages = [];
+        return $messages;
     }
 
     protected function initialize() 
@@ -76,19 +69,14 @@ class ChatBot {
     }
     
     private function logMessage($message, $type) {
-        $sessionId = $this->sessionManager->getSessionId();
-
-        $chatLog = $this->chatlogFactory->create();
-        if($this->customerSession->isLoggedIn()) {
-            $chatLog->setCustomerId($this->customerSession->getCustomer()->getId());
-        }
-        $chatLog->setSessionId($sessionId);
-        $chatLog->setMessage($message);
-        $chatLog->setCreatedAt(gmdate('Y-m-d H:i:s'));
-        $chatLog->setUpdatedAt(gmdate('Y-m-d H:i:s'));
-        $chatLog->setType($type);
         
-        $chatLog->save();
+        $messages = $this->sessionManager->getChatMessages();
+        if(!is_array($messages)) {
+            $messages = [];
+        }
+        $messages[]=['message'=>$message,'type'=>$type];
+        
+        $this->sessionManager->setChatMessages($messages);
     }
     
     
