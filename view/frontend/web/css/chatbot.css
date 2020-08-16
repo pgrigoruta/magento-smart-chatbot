@@ -67,14 +67,28 @@
 
 #transcript-window-container {
     height:300px;
-    overflow-y: scroll;
+    
+    overflow:auto; display:flex; flex-direction:column-reverse;
 }
 #transcript-window .type-q {
-    float:right;
+    background-color: rgb(124, 77, 255);
+    color: rgb(255, 255, 255);
+    float: right;
+    clear: left;
 }
-#transcript-window .type-l {
-    float:left;
+#transcript-window .type-a {
+    float: left;
+    clear: right;
+    background-color: #E8E8E8;
+    color: #434343;
 }
+
+#transcript-window .type-q,#transcript-window .type-a {
+    border-radius: 20px;
+    padding: 9px 16px;
+} 
+
+
 .typing-indicator {
     background-color: #E6E7ED;
     width: auto;
