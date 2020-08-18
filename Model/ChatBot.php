@@ -3,7 +3,6 @@
 namespace Padaviva\Chatbot\Model;
 
 use Padaviva\Chatbot\Model\ChatlogFactory;
-use A2Design\AIML\AIML;
 
 class ChatBot {
     
@@ -39,7 +38,7 @@ class ChatBot {
         
         $message = strtolower($message);
         
-        return $this->aimlClient->getAnswer($message);
+        return AimlParser::Parse($message);
     }
     
     public function getHistory() {
@@ -51,11 +50,11 @@ class ChatBot {
     protected function initialize() 
     {
         if(is_null($this->aimlClient)) {
+            
             $aimlFilePath = $this->moduleReader->getModuleDir(\Magento\Framework\Module\Dir::MODULE_ETC_DIR,'Padaviva_Chatbot');
             $aimlFilePath.='/aiml/basic.xml';
 
-            $this->aimlClient = new AIML();
-            $this->aimlClient->addDict($aimlFilePath);
+            AimlParser::setAimlPath($aimlFilePath);
 
         }
     }

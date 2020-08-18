@@ -4,8 +4,23 @@
         <pattern>hi bot</pattern>
         <template>Hello !!!!</template>
     </category>
+    
+    
+    <!--Password-->
     <category>
-        <pattern>_</pattern>
-        <template>What????</template>
+        <pattern>lost password</pattern>
+        <template>DUMP!</template>
     </category>
+    <category>
+        <pattern>_lost_password_</pattern>
+        <template><srai>lost password</srai></template>
+    </category>
+    <category>
+        <pattern>_password_lost_</pattern>
+        <template><srai>lost password</srai></template>
+    </category>
+    
+    <default>
+        <template>I did not understand this, can you rephrase?</template>
+    </default>
 </aiml>
