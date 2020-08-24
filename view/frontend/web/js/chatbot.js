@@ -27,6 +27,11 @@ define([
         $('[data-role=close-chat]').click(function(){
             $('#chat-popup').hide();
         });
+        $('[data-role=clear-chat]').click(function(){
+            $.get( config.clearChatHistoryUrl ).done(function( data ) {
+                window.location.reload();
+            });
+        });
         
         $('.chat-form-container').submit(function(event){
             event.preventDefault();

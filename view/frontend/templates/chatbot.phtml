@@ -6,7 +6,7 @@ if($block->isEnabled()):
     
 ?>
 
-<div id="padaviva-chat" data-mage-init='{"padaviva_chatbot": {"chatUrl": "<?php echo $block->getChatUrl();?>","historyUrl": "<?php echo $block->getHistoryUrl();?>"}}'>
+<div id="padaviva-chat" data-mage-init='{"padaviva_chatbot": {"chatUrl": "<?php echo $block->getChatUrl();?>","historyUrl": "<?php echo $block->getHistoryUrl();?>", "clearChatHistoryUrl":"<?php echo $block->getClearHistoryUrl();?>"}}'>
     
     <div class="open-chat" data-role="open-chat">
         <i class=" fas fa-robot" data-role="open-chat"></i>
@@ -24,9 +24,12 @@ if($block->isEnabled()):
                 </div>
             </div>
             <br/>
-            <input type="text" placeholder="Type message.." name="msg" id="chat-msg" required/>
+            <input type="text" autocomplete="off" placeholder="Type message.." name="msg" id="chat-msg" required/>
+            <br/>
+            <button type="button" class="" data-role="clear-chat">Clear Chat History</button>
             
             <button type="button" class="btn cancel" data-role="close-chat">Close</button>
+            
         </form>
     </div>
 </div>

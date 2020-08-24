@@ -19,14 +19,20 @@ class ChatBot {
     
     protected $chatLogCollectionFactory;
     
+    protected $chatUtils;
+    
+    protected $debug = false;
+    
     
     public function __construct( \Magento\Framework\Module\Dir\Reader $moduleReader,
+                                 Utils $chatUtils,
                                  ChatlogFactory $chatlogFactory,
                                  \Magento\Customer\Model\Session $customerSession,
                                  \Magento\Framework\Session\SessionManager $sessionManager)
     {
         $this->moduleReader = $moduleReader;
         $this->chatlogFactory = $chatlogFactory;
+        $this->chatUtils = $chatUtils;
         $this->sessionManager = $sessionManager;
         $this->customerSession = $customerSession;
     }
@@ -36,15 +42,23 @@ class ChatBot {
     public function getResponse($message) {
         $this->initialize();
         
-        $message = strtolower($message);
+        $message = $this->chatUtils->normalize($message);
         
-        return AimlParser::Parse($message);
+        $response = AimlParser::Parse($message);
+        
+        $response = $this->chatUtils->parseTags($response);
+        
+        return $response;
     }
     
     public function getHistory() {
         $messages = $this->sessionManager->getChatMessages();
         if(!$messages) $messages = [];
         return $messages;
+    }
+
+    public function clearHistory() {
+        $this->sessionManager->setChatMessages([]);
     }
 
     protected function initialize() 
@@ -76,6 +90,13 @@ class ChatBot {
         $messages[]=['message'=>$message,'type'=>$type];
         
         $this->sessionManager->setChatMessages($messages);
+    }
+    
+    public function setDebug($debug = true) {
+        $this->debug = $debug;
+    } 
+    public function isDebug() {
+        return $this->debug;
     }
     
     

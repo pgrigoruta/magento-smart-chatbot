@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <aiml>
+    
+    
+    <!-- generic -->
     <category>
-        <pattern>hi bot</pattern>
-        <template>Hello !!!!</template>
+        <pattern>_hello_</pattern>
+        <template>Hi there, how can I help you?</template>
+    </category>
+    
+    <category>
+        <pattern>_you_bot_</pattern>
+        <template>Yes, I am a bot.</template>
+    </category>
+    
+    <category>
+        <pattern>_talk_human_</pattern>
+        <template>Please use {{mageurl|contacts/index/index|this link}} to use our contact form.</template>
     </category>
     
     
     <!--Password-->
     <category>
         <pattern>lost password</pattern>
-        <template>DUMP!</template>
+        <template>Please use {{mageurl|customer/account/forgotpassword|this link}} to recover your password</template>
     </category>
     <category>
         <pattern>_lost_password_</pattern>
+        <template><srai>lost password</srai></template>
+    </category>
+    <category>
+        <pattern>_what_password_</pattern>
         <template><srai>lost password</srai></template>
     </category>
     <category>
@@ -23,4 +40,11 @@
     <default>
         <template>I did not understand this, can you rephrase?</template>
     </default>
+    
+    <!-- search -->
+    <category>
+        <pattern>_my_order_</pattern>
+        
+    </category>
+    
 </aiml>

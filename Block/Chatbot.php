@@ -20,4 +20,8 @@ class Chatbot extends Template {
     public function getHistoryUrl() {
         return $this->_urlBuilder->getUrl('chat/index/history');
     }
+    
+    public function getClearHistoryUrl() {
+        return $this->_urlBuilder->getUrl('chat/index/clearhistory');
+    }
 }
